@@ -5,6 +5,6 @@ ignore:
   SNYK-JS-LODASH-608086:
     - '*':
         reason: Testing ignore functionality and the .snyk file
-        expires: 2022-06-20T04:00:00.000Z
+        expires: 2022-06-25T04:00:00.000Z
         created: 2022-02-27T21:43:15.891Z
 patch: {}
