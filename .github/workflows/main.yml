@@ -7,7 +7,7 @@ jobs:
     - uses: actions/checkout@master
     - name: install snyk and authenticate
       run: |
-        sudo nmp install -g snyk
+        sudo npm install -g snyk
         snyk auth ${SNYK_TOKEN}  
     - name: Run Snyk to check for vulnerabilities
       uses: snyk/actions/node@master
