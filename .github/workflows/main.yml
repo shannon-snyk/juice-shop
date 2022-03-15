@@ -4,15 +4,14 @@ jobs:
   security:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-      - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/node@master
+    - uses: actions/checkout@master
+    - name: Run Snyk to check for vulnerabilities
+      uses: snyk/actions/node@master
+    - name: install snyk to html
+      run: 'sudo npm install snyk-to-html -g'
+    - name: output to HTML
+      run: 'snyk test --json | snyk-to-html -o results.html'    
       env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      run: 
-          name: install snyk-to-html
-          command: 'npm install -g snyk-to-html'
-      run: # output to HTML
-            name: snyk to html
-            command: 'snyk test --json | snyk-to-html -o results.html'    
+      
        
