@@ -5,14 +5,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - name: Run Snyk to check for vulnerabilities
-      uses: snyk/actions/node@master
-      continue-on-error: true
-    - name: install snyk to html
-      run: sudo npm install snyk-to-html -g
-    - name: output to HTML
+   # - name: Run Snyk to check for vulnerabilities
+    #  uses: snyk/actions/node@master
+     # continue-on-error: true
+   # - name: install snyk to html
+   #   run: sudo npm install snyk-to-html -g
+    - name: install snyk and authenticate
+      run: |
+        sudo npm install -g snyk
+        snyk auth ${SNYK_TOKEN}
+    - name: snyk test 
       run: | 
         snyk test --sarif > results.sarif
+      continue-on-error: true
     - name: upload sarif file
       uses: github/codeql-action/upload-sarif@v1
       with: 
