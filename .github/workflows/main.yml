@@ -7,6 +7,7 @@ jobs:
     - uses: actions/checkout@master
     - name: Run Snyk to check for vulnerabilities
       uses: snyk/actions/node@master
+      continue-on-error: true
     - name: install snyk to html
       run: sudo npm install snyk-to-html -g
     - name: output to HTML
