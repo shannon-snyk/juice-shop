@@ -1,0 +1,17 @@
+version: 2.1
+orbs: 
+  snyk: snyk/snyk@1.1.2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:12
+    steps:
+      - checkout
+      - run:
+          name: Install npm dependencies
+          command: 'npm install' 
+      - snyk/scan:
+         fail-on-issues: false
+         monitor-on-build: true                                    # create a snapshot of apps dependencies on snyk.io, for continoues monitoring (recommended!)
+ 
+workflows: null
