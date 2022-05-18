@@ -6,12 +6,12 @@ orbs:
 jobs:
   build:
     docker:
-      - image: cimg/node:18.2.0
+      - image: circleci/node:12
     steps:
       - checkout
       - run:
           name: Install npm dependencies
-          command: 'npm install' 
+          command: 'sudo npm install' 
       - snyk/scan:
          fail-on-issues: false
          monitor-on-build: true                                    # create a snapshot of apps dependencies on snyk.io, for continoues monitoring (recommended!)
