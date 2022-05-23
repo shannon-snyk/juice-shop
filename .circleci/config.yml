@@ -17,14 +17,15 @@ jobs:
           command: 'npm install snyk'
       - snyk/scan:
          fail-on-issues: false
-         monitor-on-build: true                                    # create a snapshot of apps dependencies on snyk.io, for continoues monitoring (recommended!)
-      - run: 
+         monitor-on-build: true    
+      - snyk/scan:
+          docker-image-name: shannreid/juice-shop
+          target-file: "Dockerfile"
+          fail-on-issues: false                                # create a snapshot of apps dependencies on snyk.io, for continoues monitoring (recommended!)
+      - run:
           name: snyk code test
           command: 'snyk code test'
-      - run:
-          name: snyk container test
-          command: 'snyk container test juice-shop'
-      - run:
-          name: snyk iac test
-          command: 'snyk iac test'
-workflows: null
+workflows:
+  test:
+    jobs:
+      - snyk/scan-iac
