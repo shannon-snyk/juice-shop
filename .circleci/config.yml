@@ -15,15 +15,12 @@ jobs:
       - run:
           name: Install snyk
           command: 'npm install snyk'
-      - snyk/scan:
-         fail-on-issues: false
-      - snyk/scan:
-          docker-image-name: 'shannreid/juice-shop:latest'
-          target-file: "Dockerfile"
-          fail-on-issues: false                                # create a snapshot of apps dependencies on snyk.io, for continoues monitoring (recommended!)
+      - run: 
+          name: build docker image
+          command: 'docker build - t juice-shop:latest .'
       - run:
-          name: snyk code test
-          command: 'snyk code test'
+          command: 'snyk container test shannreid/juice-shop:latest' 
+                              # create a snapshot of apps dependencies on snyk.io, for continoues monitoring (recommended!)
 workflows:
   test:
     jobs:
