@@ -36,12 +36,9 @@ jobs:
       - image: circleci/node:12
     steps:
       - checkout
-      - run: 
-          name: install snyk
-          command: 'npm install snyk'
-      - run:
-          name: snyk code
-          command: 'snyk code test'                    # create a snapshot of apps dependencies on snyk.io, for continoues monitoring (recommended!)
+      - snyk/scan:
+          fail-on-issues: false 
+          additional-arguments: 'code'                # create a snapshot of apps dependencies on snyk.io, for continoues monitoring (recommended!)
 workflows:
   test:
     jobs:
