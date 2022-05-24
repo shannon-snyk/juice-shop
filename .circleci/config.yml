@@ -38,7 +38,7 @@ jobs:
       - checkout
       - snyk/scan:
           fail-on-issues: false 
-          additional-arguments: 'code'                # create a snapshot of apps dependencies on snyk.io, for continoues monitoring (recommended!)
+          additional-arguments: '--code'                # create a snapshot of apps dependencies on snyk.io, for continoues monitoring (recommended!)
 workflows:
   test:
     jobs:
