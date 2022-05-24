@@ -15,9 +15,6 @@ jobs:
       - run:
           name: Install snyk
           command: 'npm install snyk'
-      - run: 
-          name: build docker image
-          command: 'docker build -t juice-shop:latest .'
       - run:
           command: 'snyk container test shannreid/juice-shop:latest' 
                               # create a snapshot of apps dependencies on snyk.io, for continoues monitoring (recommended!)
