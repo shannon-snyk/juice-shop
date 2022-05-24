@@ -4,7 +4,7 @@ version: 2.1
 orbs: 
   snyk: snyk/snyk@1.1.2
 jobs:
-  build:
+  snyktest:
     docker:
       - image: circleci/node:12
     steps:
@@ -15,11 +15,26 @@ jobs:
       - run:
           name: Install snyk
           command: 'npm install snyk'
+  build_docker_image:
+    docker:
+      - image: circleci/node:12
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: false
       - run:
-          command: 'snyk container test shannreid/juice-shop:latest' 
-                              # create a snapshot of apps dependencies on snyk.io, for continoues monitoring (recommended!)
+          name: Build Docker image
+          command: |
+            export TAG=latest
+            export IMAGE_NAME=$CIRCLE_PROJECT_REPONAME
+            docker build -t shannreid/juice-shop -t shannreid/juice-shop:latest .
+      - snyk/scan:
+          docker-image-name: shannreid/juice-shop
+          target-file: "Dockerfile"
+          fail-on-issues: true                      # create a snapshot of apps dependencies on snyk.io, for continoues monitoring (recommended!)
 workflows:
   test:
     jobs:
-      - build
+      - snyktest
+      - build_docker_image
       - snyk/scan-iac
