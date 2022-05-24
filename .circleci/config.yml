@@ -12,9 +12,8 @@ jobs:
       - run:
           name: Install npm dependencies
           command: 'npm install' 
-      - run:
-          name: Install snyk
-          command: 'npm install snyk'
+      - snyk/scan:
+          fail-on-issues: false
   build_docker_image:
     docker:
       - image: circleci/node:12
@@ -31,7 +30,15 @@ jobs:
       - snyk/scan:
           docker-image-name: shannreid/juice-shop
           target-file: "Dockerfile"
-          fail-on-issues: true                      # create a snapshot of apps dependencies on snyk.io, for continoues monitoring (recommended!)
+          fail-on-issues: true 
+  snykcode:
+    docker:
+      - image: circleci/node:12
+    steps:
+      - checkout
+      - run:
+          name: snyk code
+          command: 'snyk code test'                    # create a snapshot of apps dependencies on snyk.io, for continoues monitoring (recommended!)
 workflows:
   test:
     jobs:
