@@ -9,6 +9,7 @@ const utils = require('../../lib/utils')
 describe('/profile', () => {
   let username, submitButton, url, setProfileImageButton
 
+  // deepcode ignore NoHardcodedPasswords/test: testing :)
   protractor.beforeEach.login({ email: 'admin@' + config.get('application.domain'), password: 'admin123' })
 
   describe('challenge "ssrf"', () => {
