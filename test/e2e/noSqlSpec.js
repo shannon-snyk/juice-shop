@@ -13,6 +13,7 @@ describe('/rest/products/reviews', () => {
 
   if (!utils.disableOnContainerEnv()) {
     describe('challenge "NoSQL DoS"', () => {
+      // deepcode ignore NoHardcodedPasswords/test: testing again
       protractor.beforeEach.login({ email: 'admin@' + config.get('application.domain'), password: 'admin123' })
 
       it('should be possible to inject a command into the get route', () => {
