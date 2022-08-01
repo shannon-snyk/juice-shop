@@ -20,7 +20,7 @@ jobs:
     steps:
       - run:
           name: install snyk
-          command: 'npm install -g snyk'
+          command: 'npm install snyk'
       - run:
           name: json output snyk
           command: 'snyk test --print-deps > snyk-output.json'
