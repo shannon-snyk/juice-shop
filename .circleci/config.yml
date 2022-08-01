@@ -19,6 +19,9 @@ jobs:
       - image: circleci/node:12
     steps:
       - run:
+          name: install snyk
+          command: 'npm install -g snyk'
+      - run:
           name: json output snyk
           command: 'snyk test --print-deps > snyk-output.json'
   build_docker_image:
