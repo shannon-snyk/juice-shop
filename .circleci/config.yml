@@ -50,6 +50,7 @@ workflows:
   test:
     jobs:
       - snyktest
+      - jsonoutput
       - snykcode
       - snyk/scan-iac
       - build_docker_image
