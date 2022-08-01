@@ -14,6 +14,13 @@ jobs:
           command: 'npm install' 
       - snyk/scan:
           fail-on-issues: false
+  jsonoutput:
+    docker:
+      - image: circleci/node:12
+    steps:
+      - run:
+          name: json output snyk
+          command: 'snyk test --print-deps > snyk-output.json'
   build_docker_image:
     docker:
       - image: circleci/node:12
