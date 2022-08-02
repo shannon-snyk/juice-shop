@@ -1,5 +1,5 @@
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
-version: v1.22.1
+version: v1.25.0
 # ignores vulnerabilities until expiry date; change duration by modifying expiry date
 ignore:
   SNYK-JS-LODASH-608086:
@@ -7,4 +7,9 @@ ignore:
         reason: Testing ignore functionality and the .snyk file
         expires: 2022-06-30T04:00:00.000Z
         created: 2022-02-27T21:43:15.891Z
+  SNYK-DEBIAN10-OPENLDAP-2808412:
+    - '*':
+        reason: testing ignore from cli for container
+        expires: 2022-09-01T14:32:27.299Z
+        created: 2022-08-02T14:32:27.307Z
 patch: {}
