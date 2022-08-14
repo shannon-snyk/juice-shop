@@ -13,8 +13,9 @@ jobs:
           name: Install npm dependencies
           command: 'npm install' 
       - snyk/scan:
+          command: monitor
           fail-on-issues: false
-          monitor-on-build: true
+          monitor-on-build: false
           severity-threshold: medium
   jsonoutput:
     docker:
