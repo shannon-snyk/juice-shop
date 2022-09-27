@@ -12,7 +12,9 @@ jobs:
       - checkout
       - run:
           name: Install npm dependencies
-          command: npm install
+          command: |
+            npm config set python /usr/bin/python
+            npm install
       - snyk/scan:
           command: test
           fail-on-issues: false
