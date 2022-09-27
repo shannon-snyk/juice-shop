@@ -8,7 +8,6 @@ jobs:
   snyk-to-html:
     docker:
       - image: cimg/node:14.19
-      - image: cimg/python:3.10.7-node
     steps:
       - checkout
       - run:
@@ -22,7 +21,7 @@ jobs:
             path: results.html
   snyk-test:
     docker:
-      - image: circleci/node:12
+      - image: circleci/node:14.19
     steps:
       - checkout
       - run:
