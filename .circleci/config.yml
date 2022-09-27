@@ -25,9 +25,7 @@ jobs:
     steps:
       - run:
           name: Install npm dependencies
-          command: |
-            npm install
-            ls -a
+          command: ls -a
       - snyk/scan:
           command: test
           fail-on-issues: false
@@ -57,7 +55,7 @@ jobs:
       - checkout
       - snyk/scan:
           fail-on-issues: true 
-          additional-arguments: '--code'                # create a snapshot of apps dependencies on snyk.io, for continoues monitoring (recommended!)
+          additional-arguments: '--code'                
 workflows:
   test:
     jobs:
