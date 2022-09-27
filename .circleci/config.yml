@@ -26,8 +26,10 @@ jobs:
           name: install snyk
           command: 'npm install snyk'
       - run:
-          name: json output snyk
-          command: 'snyk test --print-deps > snyk-output.json'
+          name: snyk to html
+          command: |
+            npm install snyk-to-html
+            snyk test --json | snyk-to-html -o results.html
   build_docker_image:
     docker:
       - image: circleci/node:12
