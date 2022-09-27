@@ -17,13 +17,6 @@ jobs:
           fail-on-issues: false
           monitor-on-build: false
           severity-threshold: medium
-  snyk-to-html:
-    docker:
-      - image: circleci/node:12
-    steps:
-      - run:
-          name: install snyk
-          command: 'npm install --location=global snyk'
       - run:
           name: snyk to html
           command: |
@@ -58,7 +51,6 @@ workflows:
   test:
     jobs:
       - snyktest
-      - snyk-to-html
       - snykcode
       - snyk/scan-iac
       - build_docker_image
