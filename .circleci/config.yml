@@ -8,12 +8,9 @@ jobs:
   snyk-to-html:
     docker:
       - image: cimg/node:12.13.1
+      - image: cimg/python:3.10.7-node
     steps:
       - checkout
-      - run: 
-          name: setting python version
-          command: |
-            sudo apt-get install python3-pip python3-dev build-essential
       - run:
           name: snyk to html
           command: |
