@@ -5,7 +5,7 @@ orbs:
   snyk: snyk/snyk@1.1.2
   circleci: circleci/python@2.1.1
 jobs:
-  snyktest:
+  snyk-to-html:
     docker:
       - image: circleci/node:12
     working_directory: /temp
@@ -17,22 +17,25 @@ jobs:
             pyenv versions
             pyenv global 3.7.0
       - run:
+          name: snyk to html
+          command: |
+            npm install --location=global snyk-to-html
+            snyk test --json | snyk-to-html -o results.html
+      - store_artifacts:
+            path: /temp/html
+  snyk-test:
+    docker:
+      - image: circleci/node:12
+    steps:
+      - run:
           name: Install npm dependencies
           command: |
-            npm config set python /usr/bin/python
             npm install
       - snyk/scan:
           command: test
           fail-on-issues: false
           monitor-on-build: false
           severity-threshold: medium
-      - run:
-          name: snyk to html
-          command: |
-            npm install --location=global snyk-to-html
-            snyk test --json | snyk-to-html -o results.html
-      - store_artifacts:
-                path: /temp/html
   build_docker_image:
     docker:
       - image: circleci/node:12
@@ -61,7 +64,8 @@ jobs:
 workflows:
   test:
     jobs:
-      - snyktest
+      - snyk-to-html
+      - snyk-test
       - snykcode
       - snyk/scan-iac
       - build_docker_image
