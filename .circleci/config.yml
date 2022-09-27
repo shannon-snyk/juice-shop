@@ -8,8 +8,14 @@ jobs:
   snyktest:
     docker:
       - image: circleci/node:12
+    working_directory: /tmp
     steps:
       - checkout
+      - run: 
+          name: setting python version
+          command: |
+            pyenv versions
+            pyenv global 3.7.0
       - run:
           name: Install npm dependencies
           command: |
