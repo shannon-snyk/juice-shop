@@ -7,7 +7,7 @@ orbs:
 jobs:
   snyk-to-html:
     docker:
-      - image: cimg/node:12.13.1
+      - image: cimg/node:14.19
       - image: cimg/python:3.10.7-node
     steps:
       - checkout
