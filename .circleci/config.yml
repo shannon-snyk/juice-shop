@@ -27,7 +27,7 @@ jobs:
           name: Install npm dependencies
           command: |
             npm install
-            ls
+            ls -a
       - snyk/scan:
           command: test
           fail-on-issues: false
