@@ -13,8 +13,7 @@ jobs:
       - run: 
           name: setting python version
           command: |
-            pyenv versions
-            pyenv global 3.7.0
+            sudo apt-get install python3-pip python3-dev build-essential
       - run:
           name: snyk to html
           command: |
