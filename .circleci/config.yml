@@ -3,31 +3,35 @@
 version: 2.1
 orbs: 
   snyk: snyk/snyk@1.1.2
+  circleci: circleci/python@2.1.1
 jobs:
-  snyktest:
+  snyk-to-html:
     docker:
-      - image: circleci/node:12
+      - image: cimg/node:14.19
+    steps:
+      - checkout
+      - run:
+          name: snyk to html
+          command: |            
+            npm install snyk
+            npm install snyk-to-html
+            snyk auth $SNYK_TOKEN
+            snyk test --json | snyk-to-html -o results.html
+      - store_artifacts:
+            path: results.html
+  snyk-test:
+    docker:
+      - image: circleci/node:14.19
     steps:
       - checkout
       - run:
           name: Install npm dependencies
-          command: 'npm install' 
+          command: npm install
       - snyk/scan:
           command: test
           fail-on-issues: false
           monitor-on-build: false
           severity-threshold: medium
-          additional-arguments: --json
-  jsonoutput:
-    docker:
-      - image: circleci/node:12
-    steps:
-      - run:
-          name: install snyk
-          command: 'npm install snyk'
-      - run:
-          name: json output snyk
-          command: 'snyk test --print-deps > snyk-output.json'
   build_docker_image:
     docker:
       - image: circleci/node:12
@@ -52,12 +56,12 @@ jobs:
       - checkout
       - snyk/scan:
           fail-on-issues: true 
-          additional-arguments: '--code'                # create a snapshot of apps dependencies on snyk.io, for continoues monitoring (recommended!)
+          additional-arguments: '--code'                
 workflows:
   test:
     jobs:
-      - snyktest
-      - jsonoutput
+      - snyk-to-html
+      - snyk-test
       - snykcode
       - snyk/scan-iac
       - build_docker_image
